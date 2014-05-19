@@ -68,3 +68,69 @@ return BaseWhatever = {
   }
 };
 })();
+
+capitalize = function(value) {
+    return value.toLowerCase().replace(/(^|[^a-zA-Z])[a-zA-Z]/g, function(x) {
+        return x.toString().toUpperCase();
+    });
+};
+
+// Several stations copied from GHCNM .inv file
+var testIDs = [
+"62826730000", // Vilnius
+"62826629000", // Kaunas
+"62626422000", // Riga
+"63401489001" // Oslo
+];
+
+var fs = require('fs');
+
+function readAllCSVNames() {
+    var allCSVNames = fs.readdirSync('../csv/');
+    var result = [];
+    for (i in allCSVNames) {
+        var id = allCSVNames[i].match(/([0-9]+)/);
+        result.push(id[1]);
+    }
+    result.sort();
+    return result;
+}
+
+function readSelection() {
+    var array = fs.readFileSync('./all_years/contdata.txt').toString().split("\n");
+    var stationIDs = [];
+    for (i in array) {
+        if (array[i] === "") {
+            continue;
+        }
+        var id = array[i].match(/([0-9]+)/);
+        stationIDs.push(id[1]);
+        //console.log(id[1]);
+    }
+    return stationIDs;
+}
+
+var stationIDToIndex = new Object();
+
+var allStations = readAllCSVNames();
+for (i in allStations) {
+    stationIDToIndex[allStations[i]] = i;
+}
+
+console.log(stationIDToIndex[testIDs[0]]);
+console.log(stationIDToIndex[testIDs[1]]);
+console.log(stationIDToIndex[testIDs[2]]);
+console.log(stationIDToIndex[testIDs[3]]);
+
+function IDsToIndexes(ids) {
+    result = [];
+    for (i in ids) {
+        result.push(stationIDToIndex[ids[i]]);
+    }
+    return result;
+}
+
+var stationIDs = readSelection();
+var stationArray = IDsToIndexes(stationIDs);
+var packed = BaseWhatever.encodeSet(stationArray);
+console.log(packed);
