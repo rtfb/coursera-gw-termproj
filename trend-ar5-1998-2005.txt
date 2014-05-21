@@ -1,0 +1,14 @@
+Decadal trends from different models in climate timeseries browser
+
+Model:          Trend (°C/decade):
+bcc-csm1-1:     0.7
+BNU-ESM:        1.46
+CanESM2:        0.31
+CCSM4:          0.02
+CNRM-CM5:       0.7
+CSIRO-Mk3-6:    0.64
+GISS-E2-H:      0.26
+IPSL-CM5A:      0.24
+MIROC-ESM:      0.16
+MRI-CGCM3:      0.27
+NorESM1-M:      0.0
